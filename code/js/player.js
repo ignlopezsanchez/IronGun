@@ -11,7 +11,6 @@ function Player(game){
   this.img = new Image();
   this.img.src = "img/player.png";
   this.vx = 5;
-  this.rotatedRight = false;
   this.angle = 0;
   this.setListerners();
   
@@ -20,7 +19,7 @@ function Player(game){
 } 
 
 Player.prototype.draw = function(){
-  //this.game.ctx.save();
+
   var angleRadians = (Math.PI/180)*this.angle;
   this.game.ctx.save(); 
   this.game.ctx.translate(this.x + this.img.width/2, this.y + this.img.height/2);
@@ -28,11 +27,6 @@ Player.prototype.draw = function(){
   this.game.ctx.drawImage(this.img, -this.img.width/2, -this.img.height/2);
   this.game.ctx.restore();
  
-  // this.game.ctx.translate(this.game.canvas.width/2, this.game.canvas.height/2);
-  // this.game.ctx.rotate((Math.PI/180)*45);
-  // this.game.ctx.drawImage(this.img, this.x + 200, this.y);
-  //this.game.ctx.restore();
-  //this.game.ctx.drawImage(this.img, this.x + 200, this.y);
 
 }
 
@@ -63,18 +57,40 @@ Player.prototype.setListerners = function(){
 };
 
 Player.prototype.moveForward = function() {
+  var angleRadians = (Math.PI/180)*this.angle;
+  if (this.angle != 0) {
+    this.x += Math.sin(angleRadians)*this.vx;
+    this.y += Math.cos(angleRadians)*this.vx;
+
+  }
+  else {
   this.x += this.vx
+  }
 
 };
 Player.prototype.moveBackward = function() {
+  var angleRadians = (Math.PI/180)*this.angle;
+  if (this.angle != 0) {
+    this.x -= Math.cos(angleRadians)*this.vx;
+    this.y -= Math.sin(angleRadians)*this.vx;
+
+  }
+  else {
   this.x -= this.vx
+  }
 
 };
 Player.prototype.rotateRight = function() {
-  this.angle += 20;
+  this.angle += 45;
+  if (this.angle === 360) {
+    this.angle = 0;
+  }
 };
 Player.prototype.rotateLeft = function() {
-  this.angle -= 20;
+  this.angle -= 45;
+  if (this.angle === -360) {
+    this.angle = 0;
+  }
 };
 Player.prototype.shoot = function() {
 
