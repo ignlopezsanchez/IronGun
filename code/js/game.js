@@ -25,7 +25,7 @@ Game.prototype.draw = function(){
 };
 
 Game.prototype.move = function(){
-
+  
 
 };
 
