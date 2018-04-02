@@ -58,10 +58,28 @@ Player.prototype.setListerners = function(){
 
 Player.prototype.moveForward = function() {
   var angleRadians = (Math.PI/180)*this.angle;
-  if (this.angle != 0) {
+  if (this.angle >= 0 && this.angle < 90) {
     this.x += Math.sin(angleRadians)*this.vx;
     this.y += Math.cos(angleRadians)*this.vx;
 
+  }
+  else if (this.angle > 90 && this.angle < 180) {
+    this.x -= Math.cos(angleRadians)*this.vx;
+    this.y += Math.sin(angleRadians)*this.vx;
+
+
+  }
+  else if (this.angle > 180 && this.angle < 270) {
+    this.x -= Math.cos(angleRadians)*this.vx;
+    this.y -= Math.sin(angleRadians)*this.vx;
+
+    
+  }
+  else if (this.angle > 180 && this.angle < 270) {
+    this.x += Math.cos(angleRadians)*this.vx;
+    this.y -= Math.sin(angleRadians)*this.vx;
+
+    
   }
   else {
   this.x += this.vx
@@ -70,10 +88,28 @@ Player.prototype.moveForward = function() {
 };
 Player.prototype.moveBackward = function() {
   var angleRadians = (Math.PI/180)*this.angle;
-  if (this.angle != 0) {
+  if (this.angle >= 0 && this.angle < 90) {
     this.x -= Math.cos(angleRadians)*this.vx;
     this.y -= Math.sin(angleRadians)*this.vx;
 
+  }
+  else if (this.angle > 90 && this.angle < 180) {
+    this.x += Math.cos(angleRadians)*this.vx;
+    this.y -= Math.sin(angleRadians)*this.vx;
+
+
+  }
+  else if (this.angle > 180 && this.angle < 270) {
+    this.x -= Math.cos(angleRadians)*this.vx;
+    this.y -= Math.sin(angleRadians)*this.vx;
+
+    
+  }
+  else if (this.angle > 180 && this.angle < 270) {
+    this.x += Math.cos(angleRadians)*this.vx;
+    this.y -= Math.sin(angleRadians)*this.vx;
+
+    
   }
   else {
   this.x -= this.vx
