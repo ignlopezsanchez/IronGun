@@ -5,8 +5,7 @@ var RIGHT_KEY = 68;
 var DOWN_KEY = 83;
 
 function Player(game){
-  Person.call(this, game);
-  console.log(game);  
+  Person.call(this, game); 
   this.img = new Image();
   this.img.src = "img/player.png";
   this.setListerners();

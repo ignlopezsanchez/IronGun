@@ -74,3 +74,13 @@ Person.prototype.shoot = function() {
 
 
 };
+
+
+// if (
+//   cannonBall.x < boat.x + boat.width &&
+//   cannonBall.x + cannonBall.radius > boat.x &&
+//   cannonBall.y < boat.y + boat.height &&
+//   cannonBall.y + cannonBall.radius > boat.y
+// ) {
+//   this.handleImpact(boat);
+//     console.log(“IMPACTO!!“);
