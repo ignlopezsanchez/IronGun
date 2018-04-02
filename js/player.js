@@ -13,6 +13,7 @@ function Player(game){
   this.vx = 5;
   this.angle = 0;
   this.setListerners();
+ 
   
 
   this.bullets
@@ -20,7 +21,7 @@ function Player(game){
 
 Player.prototype.draw = function(){
 
-  var angleRadians = (Math.PI/180)*this.angle;
+  
   this.game.ctx.save(); 
   this.game.ctx.translate(this.x + this.img.width/2, this.y + this.img.height/2);
   this.game.ctx.rotate(this.angle);
@@ -57,29 +58,21 @@ Player.prototype.setListerners = function(){
 };
 
 Player.prototype.moveForward = function() {
-  var angleRadians = (Math.PI/180)*this.angle;
-  if (this.angle >= 0 && this.angle < 90) {
-    this.x += Math.sin(angleRadians)*this.vx;
-    this.y += Math.cos(angleRadians)*this.vx;
-
-  }
-  else if (this.angle > 90 && this.angle < 180) {
-    this.x -= Math.cos(angleRadians)*this.vx;
-    this.y += Math.sin(angleRadians)*this.vx;
-
-
-  }
-  else if (this.angle > 180 && this.angle < 270) {
-    this.x -= Math.cos(angleRadians)*this.vx;
-    this.y -= Math.sin(angleRadians)*this.vx;
-
-    
-  }
-  else if (this.angle > 180 && this.angle < 270) {
+  var angleRadians = (Math.PI/180)*(360-this.angle);
+  if (this.angle != 0 && this.angle != 90 && this.angle != 180 && this.angle != 270 && this.angle != 360){
     this.x += Math.cos(angleRadians)*this.vx;
     this.y -= Math.sin(angleRadians)*this.vx;
+  }  
+  else if (this.angle == 90){
+    this.y += this.vx;
 
-    
+  }
+  else if (this.angle == 180){
+    this.x -= this.vx;
+
+  }
+  else if (this.angle == 270) {
+    this.y -= this.vx;
   }
   else {
   this.x += this.vx
@@ -87,29 +80,21 @@ Player.prototype.moveForward = function() {
 
 };
 Player.prototype.moveBackward = function() {
-  var angleRadians = (Math.PI/180)*this.angle;
-  if (this.angle >= 0 && this.angle < 90) {
+  var angleRadians = (Math.PI/180)*(360-this.angle);
+  if (this.angle != 0 && this.angle != 90 && this.angle != 180 && this.angle != 270 && this.angle != 360){
     this.x -= Math.cos(angleRadians)*this.vx;
-    this.y -= Math.sin(angleRadians)*this.vx;
+    this.y += Math.sin(angleRadians)*this.vx;
+  }  
+  else if (this.angle == 90){
+    this.y -= this.vx;
 
   }
-  else if (this.angle > 90 && this.angle < 180) {
-    this.x += Math.cos(angleRadians)*this.vx;
-    this.y -= Math.sin(angleRadians)*this.vx;
-
+  else if (this.angle == 180){
+    this.x += this.vx;
 
   }
-  else if (this.angle > 180 && this.angle < 270) {
-    this.x -= Math.cos(angleRadians)*this.vx;
-    this.y -= Math.sin(angleRadians)*this.vx;
-
-    
-  }
-  else if (this.angle > 180 && this.angle < 270) {
-    this.x += Math.cos(angleRadians)*this.vx;
-    this.y -= Math.sin(angleRadians)*this.vx;
-
-    
+  else if (this.angle == 270) {
+    this.y += this.vx;
   }
   else {
   this.x -= this.vx
