@@ -7,9 +7,6 @@ function Game(canvasId){
   
 };
 
-
-
-
 Game.prototype.start = function(){
   var intervalId = setInterval(function(){
     this.clear();
@@ -21,13 +18,10 @@ Game.prototype.draw = function(){
   this.background.draw();
   this.player.draw();
   
-
-  
 };
 
 Game.prototype.move = function(){
   
-
 };
 
 Game.prototype.clear = function(){

@@ -8,14 +8,16 @@ function Player(game){
   Person.call(this, game); 
   this.img = new Image();
   this.img.src = "img/player.png";
-  this.setListerners();
+  this.setListeners();
   
 } 
 
 Player.prototype = Object.create(Person.prototype);
 Player.prototype.constructor = Player;
-Player.prototype.setListerners = function(){
+Player.prototype.setListeners = function(){
+
   document.onkeydown = function(event) {
+    var background = this.game.background;
     switch (event.keyCode) {
       case RIGHT_KEY:
         this.rotateRight();
@@ -24,14 +26,20 @@ Player.prototype.setListerners = function(){
       this.rotateLeft();        
         break;
       case UP_KEY:
-        this.moveForward();
-        break;    
-      case DOWN_KEY:
-        this.moveBackward();
+          
+          this.moveForward();
+          
+        break;
+
+      case DOWN_KEY:        
+       
+          this.moveBackward();
+        
+      break;
         
         break;
       case SPACEBAR_KEY:
-        this.shoot();
+        //this.shoot();
         
         break;    
       
