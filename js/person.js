@@ -7,6 +7,8 @@ function Person(game){
   this.bullets = [];
   this.health = 0;
   this.strength = 0;
+  this.lastX = 0;
+  this.lastY = 0;
 } 
 
 Person.prototype.draw = function(){  
@@ -18,37 +20,44 @@ Person.prototype.draw = function(){
   this.game.ctx.restore();
 }
 
-Person.prototype.moveForward = function() {
-  
+Person.prototype.moveForward = function() {  
   if (this.game.background.checkCollision()){
+    this.x = this.lastX;
+    this.y = this.lastY;
+
     return;
   }
   else {
-  var angleRadians = (Math.PI/180)*(360-this.angle);
-  
+    this.lastX = this.x;
+    this.lastY = this.y;
+    var angleRadians = (Math.PI/180)*(360-this.angle);
     this.x += Math.cos(angleRadians)*this.vx;
     this.y -= Math.sin(angleRadians)*this.vx;
+    
   
   }
 }
+
 Person.prototype.moveBackward = function() {
   if (this.game.background.checkCollision()){
     return;
   }
   else {
-  var angleRadians = (Math.PI/180)*(360-this.angle);
-  
+    this.lastX = this.x;
+    this.lastY = this.y;  
+    var angleRadians = (Math.PI/180)*(360-this.angle);
     this.x -= Math.cos(angleRadians)*this.vx;
     this.y += Math.sin(angleRadians)*this.vx;
-  
   }
 }
+
 Person.prototype.rotateRight = function() {
   this.angle += 45;
   if (this.angle === 360) {
     this.angle = 0;
   }
-};
+}
+
 Person.prototype.rotateLeft = function() {
   this.angle -= 45;
   if (this.angle === -360) {
