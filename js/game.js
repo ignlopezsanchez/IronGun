@@ -3,6 +3,7 @@ function Game(canvasId){
   this.ctx = this.canvas.getContext("2d");
   this.player = new Player(this);
   this.background = new Background(this);
+ 
   
 };
 
