@@ -108,8 +108,7 @@ Game.prototype.setListeners = function(){
 Game.prototype.start = function(){
   var intervalId = setInterval(function(){
     this.clear();
-    this.background.checkCollisionOne();
-    this.background.checkCollisionTwo();
+    this.checkCollisions();
     this.move();
     this.draw();
   }.bind(this), 1000/60);
@@ -141,4 +140,42 @@ Game.prototype.move = function(){
 Game.prototype.clear = function(){
   this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+}
+Game.prototype.checkCollisions = function(){
+  this.checkCollisionOne();
+  this.checkCollisionTwo();
+
+}
+Game.prototype.checkCollisionOne = function() {
+  var playerOne = this.playerOne;
+  
+  for (i=0; i < this.background.listObstacles.length; i++){
+    if (
+      playerOne.x < this.background.listObstacles[i][0] + this.background.listObstacles[i][2] && 
+      playerOne.x + playerOne.img.width > this.background.listObstacles[i][0] && 
+      playerOne.y < this.background.listObstacles[i][1] + this.background.listObstacles[i][3] && 
+      playerOne.y + playerOne.img.width > this.background.listObstacles[i][1]) {
+      this.playerOne.x = this.playerOne.lastX;
+      this.playerOne.y = this.playerOne.lastY;
+    
+    return true;
+    } 
+  }  
+}
+
+Game.prototype.checkCollisionTwo = function() {
+
+  var playerTwo = this.playerTwo;
+  for (i=0; i < this.background.listObstacles.length; i++){
+    if (
+      playerTwo.x < this.background.listObstacles[i][0] + this.background.listObstacles[i][2] && 
+      playerTwo.x + playerTwo.img.width > this.background.listObstacles[i][0] && 
+      playerTwo.y < this.background.listObstacles[i][1] + this.background.listObstacles[i][3] && 
+      playerTwo.y + playerTwo.img.width > this.background.listObstacles[i][1]) {
+      this.playerTwo.x = this.playerTwo.lastX;
+      this.playerTwo.y = this.playerTwo.lastY;
+    return true;
+
+    } 
+  }
 }
