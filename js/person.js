@@ -18,6 +18,14 @@ Person.prototype.draw = function(){
   this.game.ctx.translate(this.x + this.img.width/2, this.y + this.img.height/2);
   this.game.ctx.rotate(angleRadians);
   this.game.ctx.drawImage(this.img, -this.img.width/2, -this.img.height/2);
+
+
+  
+
+
+
+
+
   this.game.ctx.restore();
 
   this.bullets.forEach(function(bullet) {
@@ -71,14 +79,16 @@ Person.prototype.rotateLeft = function() {
     this.angle = 0;
   }
 };
+
 Person.prototype.shoot = function() {
   var bullet = new Bullet(this.game, this); 
   this.bullets.push(bullet);
 
 };
+
 Person.prototype.moveBullets = function() {
   this.bullets = this.bullets.filter(function(bullet) {
-    return bullet.x < this.game.canvas.width;
+    return bullet.x < this.game.canvas.width && bullet.x > 0 && bullet.y < this.game.canvas.height && bullet.y > 0;
   }.bind(this))
   
   this.bullets.forEach(function(bullet) {

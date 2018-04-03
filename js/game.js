@@ -1,7 +1,8 @@
 function Game(canvasId){
   this.canvas = document.getElementById(canvasId);
   this.ctx = this.canvas.getContext("2d");
-  this.player = new Player(this);
+  this.playerOne = new Player(this, 400, 400);
+  this.playerTwo = new Player(this, 400,500)
   this.background = new Background(this);
  
   
@@ -16,12 +17,14 @@ Game.prototype.start = function(){
 }
 Game.prototype.draw = function(){
   this.background.draw();
-  this.player.draw();
+  this.playerOne.draw();
+  this.playerTwo.draw();
   
 };
 
 Game.prototype.move = function(){
-  this.player.moveBullets()
+  this.playerOne.moveBullets();
+  this.playerTwo.moveBullets();
 };
 
 Game.prototype.clear = function(){

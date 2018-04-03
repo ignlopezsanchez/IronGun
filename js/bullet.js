@@ -30,4 +30,5 @@ Bullet.prototype.move = function() {
   var angleRadians = (Math.PI/180)*(360-this.angle);
     this.x += Math.cos(angleRadians)*this.vx;
     this.y -= Math.sin(angleRadians)*this.vx;
+
 };

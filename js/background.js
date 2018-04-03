@@ -4,6 +4,7 @@ function Background(game){
   this.y = 0;
   this.img = new Image();
   this.img.src = "img/background.png";
+  this.r = 
 
   this.listObstacles = [
     [100, 225, 150, 150],        //[x, y, width, height] de cada obstaculo
@@ -38,19 +39,32 @@ Background.prototype.draw = function(){
   this.game.ctx.drawImage(this.img, this.x, this.y);
 }
 Background.prototype.checkCollision = function() {
-  var player = this.game.player;
+  var playerOne = this.game.playerOne;
+  var playerTwo = this.game.playerTwo;
   for (i=0; i < this.listObstacles.length; i++){
     if (
-      player.x < this.listObstacles[i][0] + this.listObstacles[i][2] && 
-      player.x + player.img.width > this.listObstacles[i][0] && 
-      player.y < this.listObstacles[i][1] + this.listObstacles[i][3] && 
-      player.y + player.img.width > this.listObstacles[i][1]
+      playerOne.x < this.listObstacles[i][0] + this.listObstacles[i][2] && 
+      playerOne.x + playerOne.img.width > this.listObstacles[i][0] && 
+      playerOne.y < this.listObstacles[i][1] + this.listObstacles[i][3] && 
+      playerOne.y + playerOne.img.width > this.listObstacles[i][1]
       
     ) {
     return true;
 
     } 
   } 
+  for (i=0; i < this.listObstacles.length; i++){
+    if (
+      playerTwo.x < this.listObstacles[i][0] + this.listObstacles[i][2] && 
+      playerTwo.x + playerTwo.img.width > this.listObstacles[i][0] && 
+      playerTwo.y < this.listObstacles[i][1] + this.listObstacles[i][3] && 
+      playerTwo.y + playerTwo.img.width > this.listObstacles[i][1]
+      
+    ) {
+    return true;
+
+    } 
+  }
 }
 
 // Background.prototype.checkCollision = function() {
