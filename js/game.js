@@ -21,7 +21,7 @@ Game.prototype.draw = function(){
 };
 
 Game.prototype.move = function(){
-  
+  this.player.moveBullets()
 };
 
 Game.prototype.clear = function(){

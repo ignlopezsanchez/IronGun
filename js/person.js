@@ -9,6 +9,7 @@ function Person(game){
   this.strength = 0;
   this.lastX = 0;
   this.lastY = 0;
+  this.bullets = [];
 } 
 
 Person.prototype.draw = function(){  
@@ -18,6 +19,10 @@ Person.prototype.draw = function(){
   this.game.ctx.rotate(angleRadians);
   this.game.ctx.drawImage(this.img, -this.img.width/2, -this.img.height/2);
   this.game.ctx.restore();
+
+  this.bullets.forEach(function(bullet) {
+    bullet.draw();
+  })
 }
 
 Person.prototype.moveForward = function() {  
@@ -40,6 +45,8 @@ Person.prototype.moveForward = function() {
 
 Person.prototype.moveBackward = function() {
   if (this.game.background.checkCollision()){
+    this.x = this.lastX;
+    this.y = this.lastY;
     return;
   }
   else {
@@ -65,9 +72,19 @@ Person.prototype.rotateLeft = function() {
   }
 };
 Person.prototype.shoot = function() {
-
+  var bullet = new Bullet(this.game, this); 
+  this.bullets.push(bullet);
 
 };
+Person.prototype.moveBullets = function() {
+  this.bullets = this.bullets.filter(function(bullet) {
+    return bullet.x < this.game.canvas.width;
+  }.bind(this))
+  
+  this.bullets.forEach(function(bullet) {
+    bullet.move();
+  });
+}
 
 
 

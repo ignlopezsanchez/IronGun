@@ -3,7 +3,6 @@ var LEFT_KEY = 65;
 var UP_KEY = 87;
 var RIGHT_KEY = 68;
 var DOWN_KEY = 83;
-
 function Player(game){
   Person.call(this, game); 
   this.img = new Image();
@@ -39,7 +38,7 @@ Player.prototype.setListeners = function(){
         
         break;
       case SPACEBAR_KEY:
-        //this.shoot();
+        this.shoot();
         
         break;    
       
