@@ -12,6 +12,7 @@ function Person(game){
   this.lastY = 0;
   this.bullets = [];
   this.pressedKeys = [false, false, false, false, false];
+  this.r = 11;
 } 
 
 Person.prototype.draw = function(){  
@@ -21,6 +22,12 @@ Person.prototype.draw = function(){
   this.game.ctx.rotate(angleRadians);
   this.game.ctx.drawImage(this.img, -this.img.width/2, -this.img.height/2);
 
+
+  this.game.ctx.beginPath();
+  this.game.ctx.strokeStyle="black";
+  this.game.ctx.arc(0, 0, this.r, 0, Math.PI * 2);
+  this.game.ctx.stroke();
+  this.game.ctx.closePath();
 
 
 
@@ -35,23 +42,7 @@ Person.prototype.draw = function(){
   })
 }
 
-// Person.prototype.moveForward = function() {  
-//   if (this.game.background.checkCollision()){
-//     this.x = this.lastX;
-//     this.y = this.lastY;
 
-//     return;
-//   }
-//   else {
-//     this.lastX = this.x;
-//     this.lastY = this.y;
-//     var angleRadians = (Math.PI/180)*(360-this.angle);
-//     this.x += Math.cos(angleRadians)*this.vx;
-//     this.y -= Math.sin(angleRadians)*this.vx;
-    
-  
-//   }
-// }
 Person.prototype.moveForward = function() {  
   if(this.pressedKeys[0] === true){
     this.lastX = this.x;
@@ -64,20 +55,7 @@ Person.prototype.moveForward = function() {
   
 }
 
-// Person.prototype.moveBackward = function() {
-//   if (this.game.background.checkCollision()){
-//     this.x = this.lastX;
-//     this.y = this.lastY;
-//     return;
-//   }
-//   else {
-//     this.lastX = this.x;
-//     this.lastY = this.y;  
-//     var angleRadians = (Math.PI/180)*(360-this.angle);
-//     this.x -= Math.cos(angleRadians)*this.vx;
-//     this.y += Math.sin(angleRadians)*this.vx;
-//   }
-// }
+
 
 
 Person.prototype.moveBackward = function() {
@@ -90,12 +68,6 @@ Person.prototype.moveBackward = function() {
   }
 }
 
-// Person.prototype.rotateRight = function() {
-//   this.angle += 45;
-//   if (this.angle === 360) {
-//     this.angle = 0;
-//   }
-// }
 
 
 Person.prototype.rotateRight = function() {
@@ -110,13 +82,6 @@ Person.prototype.rotateRight = function() {
 
 }
 
-
-// Person.prototype.rotateLeft = function() {
-//   this.angle -= 45;
-//   if (this.angle === -360) {
-//     this.angle = 0;
-//   }
-// };
 
 Person.prototype.rotateLeft = function() {
 
@@ -134,12 +99,6 @@ Person.prototype.shoot = function() {
     this.bullets.push(bullet);
   }
 };
-
-// Person.prototype.shoot = function() {
-//   var bullet = new Bullet(this.game, this); 
-//   this.bullets.push(bullet);
-
-// };
 
 
 Person.prototype.trueUp = function(){

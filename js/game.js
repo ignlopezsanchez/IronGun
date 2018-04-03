@@ -144,8 +144,13 @@ Game.prototype.clear = function(){
 Game.prototype.checkCollisions = function(){
   this.checkCollisionOne();
   this.checkCollisionTwo();
+  this.checkCollisionOneBullets();
+  this.checkCollisionTwoBullets();
 
 }
+
+//this.x + this.img.width/2, this.y + this.img.height/2)
+
 Game.prototype.checkCollisionOne = function() {
   var playerOne = this.playerOne;
   
@@ -179,3 +184,51 @@ Game.prototype.checkCollisionTwo = function() {
     } 
   }
 }
+
+
+Game.prototype.checkCollisionOneBullets = function() {
+  for (j = 0; j < this.playerOne.bullets.length; j++){
+
+  
+    for (i=0; i < this.background.listObstacles.length; i++){
+      if (
+        this.playerOne.bullets[j].x + this.playerOne.img.width/2< this.background.listObstacles[i][0] + this.background.listObstacles[i][2] && 
+        this.playerOne.bullets[j].x + this.playerOne.img.width/2 + this.playerOne.bullets[j].r > this.background.listObstacles[i][0] && 
+        this.playerOne.bullets[j].y < this.background.listObstacles[i][1] + this.background.listObstacles[i][3] && 
+        this.playerOne.bullets[j].y + this.playerOne.bullets[j].r > this.background.listObstacles[i][1]) {
+        this.playerOne.bullets.splice(j,1);
+        return true;
+
+      } 
+    }
+  }
+  
+}
+
+Game.prototype.checkCollisionTwoBullets = function() {
+  for (j = 0; j < this.playerTwo.bullets.length; j++){
+
+  
+    for (i=0; i < this.background.listObstacles.length; i++){
+      if (
+        this.playerTwo.bullets[j].x + this.playerOne.img.width/2 < this.background.listObstacles[i][0] + this.background.listObstacles[i][2] && 
+        this.playerTwo.bullets[j].x + this.playerOne.img.width/2 + this.playerTwo.bullets[j].r > this.background.listObstacles[i][0] && 
+        this.playerTwo.bullets[j].y < this.background.listObstacles[i][1] + this.background.listObstacles[i][3] && 
+        this.playerTwo.bullets[j].y + this.playerTwo.bullets[j].r > this.background.listObstacles[i][1]) {
+        this.playerTwo.bullets.splice(j,1);
+        return true;
+
+      } 
+    }
+  }
+  
+}
+
+// if (
+//   cannonBall.x < boat.x + boat.width &&
+//   cannonBall.x + cannonBall.radius > boat.x &&
+//   cannonBall.y < boat.y + boat.height &&
+//   cannonBall.y + cannonBall.radius > boat.y
+// ) {
+//   this.handleImpact(boat);
+//     console.log(“IMPACTO!!“);
