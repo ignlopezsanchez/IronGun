@@ -38,52 +38,38 @@ this.collision = false;
 Background.prototype.draw = function(){
   this.game.ctx.drawImage(this.img, this.x, this.y);
 }
-Background.prototype.checkCollision = function() {
+Background.prototype.checkCollisionOne = function() {
   var playerOne = this.game.playerOne;
-  var playerTwo = this.game.playerTwo;
+  
   for (i=0; i < this.listObstacles.length; i++){
     if (
       playerOne.x < this.listObstacles[i][0] + this.listObstacles[i][2] && 
       playerOne.x + playerOne.img.width > this.listObstacles[i][0] && 
       playerOne.y < this.listObstacles[i][1] + this.listObstacles[i][3] && 
-      playerOne.y + playerOne.img.width > this.listObstacles[i][1]
-      
-    ) {
+      playerOne.y + playerOne.img.width > this.listObstacles[i][1]) {
+      this.game.playerOne.x = this.game.playerOne.lastX;
+      this.game.playerOne.y = this.game.playerOne.lastY;
+    
     return true;
-
     } 
-  } 
-  for (i=0; i < this.listObstacles.length; i++){
-    if (
-      playerTwo.x < this.listObstacles[i][0] + this.listObstacles[i][2] && 
-      playerTwo.x + playerTwo.img.width > this.listObstacles[i][0] && 
-      playerTwo.y < this.listObstacles[i][1] + this.listObstacles[i][3] && 
-      playerTwo.y + playerTwo.img.width > this.listObstacles[i][1]
-      
-    ) {
-    return true;
-
-    } 
-  }
+  }  
 }
 
-// Background.prototype.checkCollision = function() {
-//   var player = this.game.player;
-//   for (i=0; i < this.listObstacles.length; i++){
-//     var angleRadians = (Math.PI/180)*(360-this.game.player.angle);
-//     var x = this.x + Math.cos(angleRadians)*this.vx;
-//     var y = this.y - Math.sin(angleRadians)*this.vx;
-//     if (
-//       x < this.listObstacles[i][0] + this.listObstacles[i][2] && 
-//       x + player.img.width > this.listObstacles[i][0] && 
-//       y < this.listObstacles[i][1] + this.listObstacles[i][3] && 
-//       y + player.img.width > this.listObstacles[i][1]
-      
+Background.prototype.checkCollisionTwo = function() {
 
-    
-//     ) {
-//     return true;
+var playerTwo = this.game.playerTwo;
+for (i=0; i < this.listObstacles.length; i++){
+  if (
+    playerTwo.x < this.listObstacles[i][0] + this.listObstacles[i][2] && 
+    playerTwo.x + playerTwo.img.width > this.listObstacles[i][0] && 
+    playerTwo.y < this.listObstacles[i][1] + this.listObstacles[i][3] && 
+    playerTwo.y + playerTwo.img.width > this.listObstacles[i][1]) {
+    this.game.playerTwo.x = this.game.playerTwo.lastX;
+    this.game.playerTwo.y = this.game.playerTwo.lastY;
+  return true;
 
-//     } 
-//   } 
-// }
+  } 
+}
+}
+
+

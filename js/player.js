@@ -1,9 +1,9 @@
 
 
-function Player(game,x, y){
+function Player(game,x, y, urlPlayer){
   Person.call(this, game); 
   this.img = new Image();
-  this.img.src = "img/player.png";
+  this.img.src = urlPlayer;
   this.x = x;
   this.y = y;
  

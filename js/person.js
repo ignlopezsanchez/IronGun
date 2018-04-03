@@ -2,14 +2,16 @@ function Person(game){
   this.game = game;
   this.x = 400;
   this.y = 400;
-  this.vx = 5;
+  this.vx = 2;
   this.angle = 0;
+  this.angleMovement = 4;
   this.bullets = [];
-  this.health = 0;
-  this.strength = 0;
+  this.health = 100;
+  this.strength = 5;
   this.lastX = 0;
   this.lastY = 0;
   this.bullets = [];
+  this.pressedKeys = [false, false, false, false, false];
 } 
 
 Person.prototype.draw = function(){  
@@ -20,7 +22,7 @@ Person.prototype.draw = function(){
   this.game.ctx.drawImage(this.img, -this.img.width/2, -this.img.height/2);
 
 
-  
+
 
 
 
@@ -33,31 +35,53 @@ Person.prototype.draw = function(){
   })
 }
 
-Person.prototype.moveForward = function() {  
-  if (this.game.background.checkCollision()){
-    this.x = this.lastX;
-    this.y = this.lastY;
+// Person.prototype.moveForward = function() {  
+//   if (this.game.background.checkCollision()){
+//     this.x = this.lastX;
+//     this.y = this.lastY;
 
-    return;
-  }
-  else {
+//     return;
+//   }
+//   else {
+//     this.lastX = this.x;
+//     this.lastY = this.y;
+//     var angleRadians = (Math.PI/180)*(360-this.angle);
+//     this.x += Math.cos(angleRadians)*this.vx;
+//     this.y -= Math.sin(angleRadians)*this.vx;
+    
+  
+//   }
+// }
+Person.prototype.moveForward = function() {  
+  if(this.pressedKeys[0] === true){
     this.lastX = this.x;
     this.lastY = this.y;
     var angleRadians = (Math.PI/180)*(360-this.angle);
     this.x += Math.cos(angleRadians)*this.vx;
     this.y -= Math.sin(angleRadians)*this.vx;
     
-  
   }
+  
 }
 
+// Person.prototype.moveBackward = function() {
+//   if (this.game.background.checkCollision()){
+//     this.x = this.lastX;
+//     this.y = this.lastY;
+//     return;
+//   }
+//   else {
+//     this.lastX = this.x;
+//     this.lastY = this.y;  
+//     var angleRadians = (Math.PI/180)*(360-this.angle);
+//     this.x -= Math.cos(angleRadians)*this.vx;
+//     this.y += Math.sin(angleRadians)*this.vx;
+//   }
+// }
+
+
 Person.prototype.moveBackward = function() {
-  if (this.game.background.checkCollision()){
-    this.x = this.lastX;
-    this.y = this.lastY;
-    return;
-  }
-  else {
+  if(this.pressedKeys[1] === true){
     this.lastX = this.x;
     this.lastY = this.y;  
     var angleRadians = (Math.PI/180)*(360-this.angle);
@@ -66,25 +90,89 @@ Person.prototype.moveBackward = function() {
   }
 }
 
+// Person.prototype.rotateRight = function() {
+//   this.angle += 45;
+//   if (this.angle === 360) {
+//     this.angle = 0;
+//   }
+// }
+
+
 Person.prototype.rotateRight = function() {
-  this.angle += 45;
-  if (this.angle === 360) {
-    this.angle = 0;
+  if(this.pressedKeys[2] === true){
+    this.angle += this.angleMovement;
+    if (this.angle === 360) {
+      this.angle = 0;
+
+    }
   }
+
+
 }
 
+
+// Person.prototype.rotateLeft = function() {
+//   this.angle -= 45;
+//   if (this.angle === -360) {
+//     this.angle = 0;
+//   }
+// };
+
 Person.prototype.rotateLeft = function() {
-  this.angle -= 45;
-  if (this.angle === -360) {
-    this.angle = 0;
+
+  if(this.pressedKeys[3] === true){
+    this.angle -= this.angleMovement;
+    if (this.angle === -360) {
+      this.angle = 0;
+    }
   }
 };
 
 Person.prototype.shoot = function() {
-  var bullet = new Bullet(this.game, this); 
-  this.bullets.push(bullet);
-
+  if(this.pressedKeys[4] === true){
+    var bullet = new Bullet(this.game, this); 
+    this.bullets.push(bullet);
+  }
 };
+
+// Person.prototype.shoot = function() {
+//   var bullet = new Bullet(this.game, this); 
+//   this.bullets.push(bullet);
+
+// };
+
+
+Person.prototype.trueUp = function(){
+  this.pressedKeys[0] = true;
+}
+Person.prototype.trueDown = function(){
+  this.pressedKeys[1] = true;
+}
+Person.prototype.trueLeft = function(){
+  this.pressedKeys[3] = true;
+}
+Person.prototype.trueRight = function(){
+  this.pressedKeys[2] = true;
+}
+Person.prototype.trueShoot = function(){
+  this.pressedKeys[4] = true;
+}
+Person.prototype.falseUp = function(){
+  this.pressedKeys[0] = false;
+}
+Person.prototype.falseDown = function(){
+  this.pressedKeys[1] = false;
+}
+Person.prototype.falseLeft = function(){
+  this.pressedKeys[3] = false;
+}
+Person.prototype.falseRight = function(){
+  this.pressedKeys[2] = false;
+}
+Person.prototype.falseShoot = function(){
+  this.pressedKeys[4] = false;
+}
+
 
 Person.prototype.moveBullets = function() {
   this.bullets = this.bullets.filter(function(bullet) {

@@ -12,8 +12,8 @@ var SHOOT_KEY = 191;
 function Game(canvasId){
   this.canvas = document.getElementById(canvasId);
   this.ctx = this.canvas.getContext("2d");
-  this.playerOne = new Player(this, 400, 400);
-  this.playerTwo = new Player(this, 400,500)
+  this.playerOne = new Player(this, 400, 400, "img/player.png");
+  this.playerTwo = new Player(this, 400, 500, "img/player.png")
   this.background = new Background(this);
   this.setListeners();
  
@@ -25,51 +25,91 @@ Game.prototype.setListeners = function(){
   document.onkeydown = function(event) {
     
     switch (event.keyCode) {
-      case D_KEY:
-        this.playerOne.rotateRight();
+      case D_KEY:            
+        this.playerOne.trueRight();
         break;
       case A_KEY:
-      this.playerOne.rotateLeft();        
+      this.playerOne.trueLeft();        
         break;
       case W_KEY:        
-      this.playerOne.moveForward();          
+      this.playerOne.trueUp();         
         break;
       case S_KEY:               
-      this.playerOne.moveBackward();        
+      this.playerOne.trueDown();        
       break;        
-        break;
+        
       case Q_KEY:
-        this.playerOne.shoot();        
-        break; 
-        
-        
-
-
-        case RIGHT_KEY:
-        this.playerTwo.rotateRight();
+      this.playerOne.trueShoot();        
+        break;        
+      case RIGHT_KEY:
+      this.playerTwo.trueRight();
         break;
       case LEFT_KEY:
-      this.playerTwo.rotateLeft();        
+      this.playerTwo.trueLeft();        
         break;
       case UP_KEY:        
-      this.playerTwo.moveForward();          
+      this.playerTwo.trueUp();          
         break;
       case DOWN_KEY:               
-      this.playerTwo.moveBackward();        
+      this.playerTwo.trueDown();        
       break;        
         break;
       case SHOOT_KEY:
-        this.playerTwo.shoot();        
+      this.playerTwo.trueShoot();        
         break;    
       
     }
   }.bind(this)
 
 
+  document.onkeyup = function(event) {
+    
+    switch (event.keyCode) {
+      case D_KEY:
+      this.playerOne.falseRight();
+        break;
+      case A_KEY:
+      this.playerOne.falseLeft();        
+        break;
+      case W_KEY:        
+      this.playerOne.falseUp();          
+        break;
+      case S_KEY:               
+      this.playerOne.falseDown();        
+      break;        
+        break;
+      case Q_KEY:
+      this.playerOne.falseShoot();        
+        break;        
+      case RIGHT_KEY:
+      this.playerTwo.falseRight();
+        break;
+      case LEFT_KEY:
+      this.playerTwo.falseLeft();        
+        break;
+      case UP_KEY:        
+      this.playerTwo.falseUp();          
+        break;
+      case DOWN_KEY:               
+      this.playerTwo.falseDown();        
+      break;        
+        break;
+      case SHOOT_KEY:
+      this.playerTwo.falseShoot();        
+        break;    
+      
+    }
+  }.bind(this)
+
+
+
+
 };
 Game.prototype.start = function(){
   var intervalId = setInterval(function(){
     this.clear();
+    this.background.checkCollisionOne();
+    this.background.checkCollisionTwo();
     this.move();
     this.draw();
   }.bind(this), 1000/60);
@@ -82,6 +122,18 @@ Game.prototype.draw = function(){
 };
 
 Game.prototype.move = function(){
+  this.playerOne.moveForward();
+  this.playerOne.moveBackward();
+  this.playerOne.rotateRight();
+  this.playerOne.rotateLeft();
+  this.playerOne.shoot();
+
+  this.playerTwo.moveForward();
+  this.playerTwo.moveBackward();
+  this.playerTwo.rotateRight();
+  this.playerTwo.rotateLeft();
+  this.playerTwo.shoot();
+
   this.playerOne.moveBullets();
   this.playerTwo.moveBullets();
 };
