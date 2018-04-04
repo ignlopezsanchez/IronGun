@@ -21,27 +21,16 @@ Person.prototype.draw = function(){
   this.game.ctx.translate(this.x + this.img.width/2, this.y + this.img.height/2);
   this.game.ctx.rotate(angleRadians);
   this.game.ctx.drawImage(this.img, -this.img.width/2, -this.img.height/2);
-
-
-  this.game.ctx.beginPath();
-  this.game.ctx.strokeStyle="black";
-  this.game.ctx.arc(0, 0, this.r, 0, Math.PI * 2);
-  this.game.ctx.stroke();
-  this.game.ctx.closePath();
-
-
-
-
-
-
-
+  // this.game.ctx.beginPath();
+  // this.game.ctx.strokeStyle="black";
+  // this.game.ctx.arc(0, 0, this.r, 0, Math.PI * 2);
+  // this.game.ctx.stroke();
+  // this.game.ctx.closePath();
   this.game.ctx.restore();
-
   this.bullets.forEach(function(bullet) {
     bullet.draw();
   })
 }
-
 
 Person.prototype.moveForward = function() {  
   if(this.pressedKeys[0] === true){

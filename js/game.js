@@ -113,7 +113,6 @@ Game.prototype.move = function(){
   this.playerOne.rotateRight();
   this.playerOne.rotateLeft();
 
-
   this.playerTwo.moveForward();
   this.playerTwo.moveBackward();
   this.playerTwo.rotateRight();

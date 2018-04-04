@@ -4,7 +4,7 @@ function Background(game){
   this.y = 0;
   this.img = new Image();
   this.img.src = "img/background.png";
-  this.r = 
+ 
 
   this.listObstacles = [
     [100, 225, 150, 150],        //[x, y, width, height] de cada obstaculo
@@ -21,9 +21,9 @@ function Background(game){
     [225, 425, 75, 25],
     [250, 450, 25, 175],
     [225, 625, 75, 25],
-    [450, 425, 90, 25],
+    [450, 425, 95, 25],
     [500, 450, 25, 175],
-    [450, 625, 90, 25],
+    [450, 625, 95, 25],
     [650, 425, 75, 25],
     [700, 450, 25, 175],
     [650, 625, 75, 25],
