@@ -39,7 +39,7 @@ Game.prototype.setListeners = function(){
       break;        
         
       case Q_KEY:
-      this.playerOne.trueShoot();        
+      this.playerOne.shoot();        
         break;        
       case RIGHT_KEY:
       this.playerTwo.trueRight();
@@ -55,7 +55,7 @@ Game.prototype.setListeners = function(){
       break;        
         break;
       case SHOOT_KEY:
-      this.playerTwo.trueShoot();        
+      this.playerTwo.shoot();       
         break;    
       
     }
@@ -79,7 +79,7 @@ Game.prototype.setListeners = function(){
       break;        
         break;
       case Q_KEY:
-      this.playerOne.falseShoot();        
+            
         break;        
       case RIGHT_KEY:
       this.playerTwo.falseRight();
@@ -95,7 +95,7 @@ Game.prototype.setListeners = function(){
       break;        
         break;
       case SHOOT_KEY:
-      this.playerTwo.falseShoot();        
+      
         break;    
       
     }
@@ -128,13 +128,13 @@ Game.prototype.move = function(){
   this.playerOne.moveBackward();
   this.playerOne.rotateRight();
   this.playerOne.rotateLeft();
-  this.playerOne.shoot();
+
 
   this.playerTwo.moveForward();
   this.playerTwo.moveBackward();
   this.playerTwo.rotateRight();
   this.playerTwo.rotateLeft();
-  this.playerTwo.shoot();
+ 
 
   this.playerOne.moveBullets();
   this.playerTwo.moveBullets();

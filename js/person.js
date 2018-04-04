@@ -11,7 +11,7 @@ function Person(game){
   this.lastX = 0;
   this.lastY = 0;
   this.bullets = [];
-  this.pressedKeys = [false, false, false, false, false];
+  this.pressedKeys = [false, false, false, false];
   this.r = 11;
 } 
 
@@ -49,10 +49,8 @@ Person.prototype.moveForward = function() {
     this.lastY = this.y;
     var angleRadians = (Math.PI/180)*(360-this.angle);
     this.x += Math.cos(angleRadians)*this.vx;
-    this.y -= Math.sin(angleRadians)*this.vx;
-    
-  }
-  
+    this.y -= Math.sin(angleRadians)*this.vx;    
+  }  
 }
 
 
@@ -75,11 +73,8 @@ Person.prototype.rotateRight = function() {
     this.angle += this.angleMovement;
     if (this.angle === 360) {
       this.angle = 0;
-
     }
   }
-
-
 }
 
 
@@ -94,10 +89,10 @@ Person.prototype.rotateLeft = function() {
 };
 
 Person.prototype.shoot = function() {
-  if(this.pressedKeys[4] === true){
+  
     var bullet = new Bullet(this.game, this); 
     this.bullets.push(bullet);
-  }
+  
 };
 
 
@@ -107,14 +102,11 @@ Person.prototype.trueUp = function(){
 Person.prototype.trueDown = function(){
   this.pressedKeys[1] = true;
 }
-Person.prototype.trueLeft = function(){
-  this.pressedKeys[3] = true;
-}
 Person.prototype.trueRight = function(){
   this.pressedKeys[2] = true;
 }
-Person.prototype.trueShoot = function(){
-  this.pressedKeys[4] = true;
+Person.prototype.trueLeft = function(){
+  this.pressedKeys[3] = true;
 }
 Person.prototype.falseUp = function(){
   this.pressedKeys[0] = false;
@@ -122,15 +114,13 @@ Person.prototype.falseUp = function(){
 Person.prototype.falseDown = function(){
   this.pressedKeys[1] = false;
 }
-Person.prototype.falseLeft = function(){
-  this.pressedKeys[3] = false;
-}
 Person.prototype.falseRight = function(){
   this.pressedKeys[2] = false;
 }
-Person.prototype.falseShoot = function(){
-  this.pressedKeys[4] = false;
+Person.prototype.falseLeft = function(){
+  this.pressedKeys[3] = false;
 }
+
 
 
 Person.prototype.moveBullets = function() {
