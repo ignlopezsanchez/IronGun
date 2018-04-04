@@ -71,7 +71,7 @@ Person.prototype.moveBackward = function() {
 Person.prototype.rotateRight = function() {
   if(this.pressedKeys[2] === true){
     this.angle += this.angleMovement;
-    if (this.angle === 360) {
+    if (this.angle >= 360) {
       this.angle = 0;
     }
   }
@@ -82,7 +82,7 @@ Person.prototype.rotateLeft = function() {
 
   if(this.pressedKeys[3] === true){
     this.angle -= this.angleMovement;
-    if (this.angle === -360) {
+    if (this.angle <= -360) {
       this.angle = 0;
     }
   }
