@@ -5,6 +5,8 @@ function Player(game,x, y, urlPlayer){
   this.img.src = urlPlayer;
   this.x = x;
   this.y = y;  
+  this.lastX = this.x;
+  this.lastY = this.y;
 } 
 
 Player.prototype = Object.create(Person.prototype);

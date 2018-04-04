@@ -1,15 +1,13 @@
 function Person(game){
   this.game = game;
-  this.x = 400;
-  this.y = 400;
+  this.x;
+  this.y;
   this.vx = 2;
   this.angle = 0;
-  this.angleMovement = 4;
+  this.angleMovement = 3;
   this.bullets = [];
   this.health = 100;
   this.strength = 1;
-  this.lastX = 0;
-  this.lastY = 0;
   this.bullets = [];
   this.pressedKeys = [false, false, false, false];
   this.r = 11;
