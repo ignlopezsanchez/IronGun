@@ -106,12 +106,15 @@ Game.prototype.setListeners = function(){
 
 };
 Game.prototype.start = function(){
-  var intervalId = setInterval(function(){
+    this.intervalId = setInterval(function(){
     this.clear();
     this.checkCollisions();
     this.move();
     this.draw();
   }.bind(this), 1000/60);
+}
+Game.prototype.stop = function(){
+  clearInterval(this.intervalId);
 }
 Game.prototype.draw = function(){
   this.background.draw();
@@ -146,12 +149,14 @@ Game.prototype.checkCollisions = function(){
   this.checkCollisionTwo();
   this.checkCollisionOneBullets();
   this.checkCollisionTwoBullets();
+  this.checkCollisionBulletsOnePlayerTwo();
+  this.checkCollisionBulletsTwoPlayerOne();
 
 }
 
 //this.x + this.img.width/2, this.y + this.img.height/2)
 
-Game.prototype.checkCollisionOne = function() {
+Game.prototype.checkCollisionOne = function() {                    //entre player1 y obstaculos
   var playerOne = this.playerOne;
   
   for (i=0; i < this.background.listObstacles.length; i++){
@@ -168,7 +173,7 @@ Game.prototype.checkCollisionOne = function() {
   }  
 }
 
-Game.prototype.checkCollisionTwo = function() {
+Game.prototype.checkCollisionTwo = function() {                                //entre player2 y obstaculos
 
   var playerTwo = this.playerTwo;
   for (i=0; i < this.background.listObstacles.length; i++){
@@ -186,7 +191,7 @@ Game.prototype.checkCollisionTwo = function() {
 }
 
 
-Game.prototype.checkCollisionOneBullets = function() {
+Game.prototype.checkCollisionOneBullets = function() {                         //entre balas de player1 y obstaculos
   for (j = 0; j < this.playerOne.bullets.length; j++){
 
   
@@ -205,7 +210,7 @@ Game.prototype.checkCollisionOneBullets = function() {
   
 }
 
-Game.prototype.checkCollisionTwoBullets = function() {
+Game.prototype.checkCollisionTwoBullets = function() {                                //entre balas de player2 y obstaculos
   for (j = 0; j < this.playerTwo.bullets.length; j++){
 
   
@@ -216,6 +221,55 @@ Game.prototype.checkCollisionTwoBullets = function() {
         this.playerTwo.bullets[j].y < this.background.listObstacles[i][1] + this.background.listObstacles[i][3] && 
         this.playerTwo.bullets[j].y + this.playerTwo.bullets[j].r > this.background.listObstacles[i][1]) {
         this.playerTwo.bullets.splice(j,1);
+        return true;
+
+      } 
+    }
+  }
+  
+}
+
+Game.prototype.checkCollisionBulletsOnePlayerTwo = function() {                           //entre balas de player1 y player2
+  var playerTwo = this.playerTwo;
+  for (j = 0; j < this.playerOne.bullets.length; j++){
+
+  
+    for (i=0; i < this.background.listObstacles.length; i++){
+      if (
+        this.playerOne.bullets[j].x + this.playerOne.img.width/2 < playerTwo.x + playerTwo.img.width && 
+        this.playerOne.bullets[j].x + this.playerOne.img.width/2 + this.playerOne.bullets[j].r > playerTwo.x && 
+        this.playerOne.bullets[j].y < playerTwo.y + playerTwo.img.width && 
+        this.playerOne.bullets[j].y + this.playerOne.bullets[j].r > playerTwo.y) {
+        this.playerOne.bullets.splice(j,1);
+        this.playerTwo.health -= this.playerOne.strength;
+        if (playerTwo.health == 0){
+          this.stop();
+        }
+        return true;
+
+      } 
+    }
+  }
+  
+}
+
+
+Game.prototype.checkCollisionBulletsTwoPlayerOne = function() {                           //entre balas de player2 y player1
+  var playerOne = this.playerOne;
+  for (j = 0; j < this.playerTwo.bullets.length; j++){
+
+  
+    for (i=0; i < this.background.listObstacles.length; i++){
+      if (
+        this.playerTwo.bullets[j].x + this.playerOne.img.width/2 < playerOne.x + playerOne.img.width && 
+        this.playerTwo.bullets[j].x + this.playerOne.img.width/2 + this.playerTwo.bullets[j].r > playerOne.x && 
+        this.playerTwo.bullets[j].y < playerOne.y + playerOne.img.width && 
+        this.playerTwo.bullets[j].y + this.playerTwo.bullets[j].r > playerOne.y) {
+        this.playerTwo.bullets.splice(j,1);
+        this.playerOne.health -= this.playerTwo.strength;
+        if (playerOne.health == 0){
+          this.stop();
+        }
         return true;
 
       } 
