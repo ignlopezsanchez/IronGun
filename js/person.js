@@ -19,6 +19,8 @@ Person.prototype.draw = function(){
   var angleRadians = (Math.PI/180)*(this.angle);
   this.game.ctx.save(); 
   this.game.ctx.translate(this.x + this.img.width/2, this.y + this.img.height/2);
+  this.centerX = this.x + this.img.width/2;
+  this.centerY = this.y + this.img.height/2;
   this.game.ctx.rotate(angleRadians);
   this.game.ctx.drawImage(this.img, -this.img.width/2, -this.img.height/2);
 
@@ -88,13 +90,10 @@ Person.prototype.rotateLeft = function() {
   }
 };
 
-Person.prototype.shoot = function() {
-  
+Person.prototype.shoot = function() { 
     var bullet = new Bullet(this.game, this); 
-    this.bullets.push(bullet);
-  
+    this.bullets.push(bullet);  
 };
-
 
 Person.prototype.trueUp = function(){
   this.pressedKeys[0] = true;
@@ -121,8 +120,6 @@ Person.prototype.falseLeft = function(){
   this.pressedKeys[3] = false;
 }
 
-
-
 Person.prototype.moveBullets = function() {
   this.bullets = this.bullets.filter(function(bullet) {
     return bullet.x < this.game.canvas.width && bullet.x > 0 && bullet.y < this.game.canvas.height && bullet.y > 0;
@@ -137,12 +134,3 @@ Person.prototype.moveBullets = function() {
 
 
 
-
-// if (
-//   cannonBall.x < boat.x + boat.width &&
-//   cannonBall.x + cannonBall.radius > boat.x &&
-//   cannonBall.y < boat.y + boat.height &&
-//   cannonBall.y + cannonBall.radius > boat.y
-// ) {
-//   this.handleImpact(boat);
-//     console.log(“IMPACTO!!“);

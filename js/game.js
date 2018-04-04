@@ -13,17 +13,13 @@ function Game(canvasId){
   this.canvas = document.getElementById(canvasId);
   this.ctx = this.canvas.getContext("2d");
   this.playerOne = new Player(this, 400, 400, "img/player.png");
-  this.playerTwo = new Player(this, 400, 500, "img/player.png")
+  this.playerTwo = new Player(this, 400, 700, "img/player.png")
   this.background = new Background(this);
-  this.setListeners();
- 
-  
+  this.setListeners();  
 };
 
 Game.prototype.setListeners = function(){
-
-  document.onkeydown = function(event) {
-    
+  document.onkeydown = function(event) {  
     switch (event.keyCode) {
       case D_KEY:            
         this.playerOne.trueRight();
@@ -36,8 +32,7 @@ Game.prototype.setListeners = function(){
         break;
       case S_KEY:               
       this.playerOne.trueDown();        
-      break;        
-        
+      break;               
       case Q_KEY:
       this.playerOne.shoot();        
         break;        
@@ -62,8 +57,7 @@ Game.prototype.setListeners = function(){
   }.bind(this)
 
 
-  document.onkeyup = function(event) {
-    
+  document.onkeyup = function(event) {   
     switch (event.keyCode) {
       case D_KEY:
       this.playerOne.falseRight();
@@ -78,9 +72,6 @@ Game.prototype.setListeners = function(){
       this.playerOne.falseDown();        
       break;        
         break;
-      case Q_KEY:
-            
-        break;        
       case RIGHT_KEY:
       this.playerTwo.falseRight();
         break;
@@ -93,18 +84,10 @@ Game.prototype.setListeners = function(){
       case DOWN_KEY:               
       this.playerTwo.falseDown();        
       break;        
-        break;
-      case SHOOT_KEY:
-      
-        break;    
-      
     }
   }.bind(this)
-
-
-
-
 };
+
 Game.prototype.start = function(){
     this.intervalId = setInterval(function(){
     this.clear();
@@ -113,14 +96,15 @@ Game.prototype.start = function(){
     this.draw();
   }.bind(this), 1000/60);
 }
+
 Game.prototype.stop = function(){
   clearInterval(this.intervalId);
 }
+
 Game.prototype.draw = function(){
   this.background.draw();
   this.playerOne.draw();
-  this.playerTwo.draw();
-  
+  this.playerTwo.draw();  
 };
 
 Game.prototype.move = function(){
@@ -151,138 +135,153 @@ Game.prototype.checkCollisions = function(){
   this.checkCollisionTwoBullets();
   this.checkCollisionBulletsOnePlayerTwo();
   this.checkCollisionBulletsTwoPlayerOne();
+  // this.checkCollisionPlayerOnePlayerTwo();
+  // this.checkCollisionPlayerTwoPlayerOne();
+
+  
 
 }
 
-//this.x + this.img.width/2, this.y + this.img.height/2)
-
 Game.prototype.checkCollisionOne = function() {                    //entre player1 y obstaculos
-  var playerOne = this.playerOne;
-  
+  var playerOne = this.playerOne;  
   for (i=0; i < this.background.listObstacles.length; i++){
     if (
       playerOne.x < this.background.listObstacles[i][0] + this.background.listObstacles[i][2] && 
-      playerOne.x + playerOne.img.width > this.background.listObstacles[i][0] && 
+      playerOne.x + playerOne.img.width/2 + playerOne.r > this.background.listObstacles[i][0] && 
       playerOne.y < this.background.listObstacles[i][1] + this.background.listObstacles[i][3] && 
-      playerOne.y + playerOne.img.width > this.background.listObstacles[i][1]) {
+      playerOne.y + playerOne.img.width/2 + playerOne.r  > this.background.listObstacles[i][1]
+    ) {
       this.playerOne.x = this.playerOne.lastX;
-      this.playerOne.y = this.playerOne.lastY;
-    
+      this.playerOne.y = this.playerOne.lastY;   
     return true;
     } 
   }  
 }
 
 Game.prototype.checkCollisionTwo = function() {                                //entre player2 y obstaculos
-
   var playerTwo = this.playerTwo;
   for (i=0; i < this.background.listObstacles.length; i++){
     if (
       playerTwo.x < this.background.listObstacles[i][0] + this.background.listObstacles[i][2] && 
-      playerTwo.x + playerTwo.img.width > this.background.listObstacles[i][0] && 
+      playerTwo.x + playerTwo.img.width/2 + playerTwo.r > this.background.listObstacles[i][0] && 
       playerTwo.y < this.background.listObstacles[i][1] + this.background.listObstacles[i][3] && 
-      playerTwo.y + playerTwo.img.width > this.background.listObstacles[i][1]) {
+      playerTwo.y + playerTwo.img.width/2 + playerTwo.r > this.background.listObstacles[i][1]
+    ) {
       this.playerTwo.x = this.playerTwo.lastX;
       this.playerTwo.y = this.playerTwo.lastY;
     return true;
-
     } 
   }
 }
 
 
 Game.prototype.checkCollisionOneBullets = function() {                         //entre balas de player1 y obstaculos
-  for (j = 0; j < this.playerOne.bullets.length; j++){
-
-  
+  for (j = 0; j < this.playerOne.bullets.length; j++){ 
     for (i=0; i < this.background.listObstacles.length; i++){
       if (
         this.playerOne.bullets[j].x + this.playerOne.img.width/2< this.background.listObstacles[i][0] + this.background.listObstacles[i][2] && 
         this.playerOne.bullets[j].x + this.playerOne.img.width/2 + this.playerOne.bullets[j].r > this.background.listObstacles[i][0] && 
         this.playerOne.bullets[j].y < this.background.listObstacles[i][1] + this.background.listObstacles[i][3] && 
-        this.playerOne.bullets[j].y + this.playerOne.bullets[j].r > this.background.listObstacles[i][1]) {
+        this.playerOne.bullets[j].y + this.playerOne.bullets[j].r > this.background.listObstacles[i][1]
+      ) {
         this.playerOne.bullets.splice(j,1);
         return true;
-
       } 
     }
-  }
-  
+  }  
 }
 
 Game.prototype.checkCollisionTwoBullets = function() {                                //entre balas de player2 y obstaculos
-  for (j = 0; j < this.playerTwo.bullets.length; j++){
-
-  
+  for (j = 0; j < this.playerTwo.bullets.length; j++){  
     for (i=0; i < this.background.listObstacles.length; i++){
       if (
         this.playerTwo.bullets[j].x + this.playerOne.img.width/2 < this.background.listObstacles[i][0] + this.background.listObstacles[i][2] && 
         this.playerTwo.bullets[j].x + this.playerOne.img.width/2 + this.playerTwo.bullets[j].r > this.background.listObstacles[i][0] && 
         this.playerTwo.bullets[j].y < this.background.listObstacles[i][1] + this.background.listObstacles[i][3] && 
-        this.playerTwo.bullets[j].y + this.playerTwo.bullets[j].r > this.background.listObstacles[i][1]) {
+        this.playerTwo.bullets[j].y + this.playerTwo.bullets[j].r > this.background.listObstacles[i][1]
+      ) {
         this.playerTwo.bullets.splice(j,1);
         return true;
-
       } 
     }
-  }
-  
+  }  
 }
 
 Game.prototype.checkCollisionBulletsOnePlayerTwo = function() {                           //entre balas de player1 y player2
   var playerTwo = this.playerTwo;
-  for (j = 0; j < this.playerOne.bullets.length; j++){
-
-  
+  for (j = 0; j < this.playerOne.bullets.length; j++){  
     for (i=0; i < this.background.listObstacles.length; i++){
       if (
         this.playerOne.bullets[j].x + this.playerOne.img.width/2 < playerTwo.x + playerTwo.img.width && 
         this.playerOne.bullets[j].x + this.playerOne.img.width/2 + this.playerOne.bullets[j].r > playerTwo.x && 
         this.playerOne.bullets[j].y < playerTwo.y + playerTwo.img.width && 
-        this.playerOne.bullets[j].y + this.playerOne.bullets[j].r > playerTwo.y) {
+        this.playerOne.bullets[j].y + this.playerOne.bullets[j].r > playerTwo.y
+      ) {
         this.playerOne.bullets.splice(j,1);
         this.playerTwo.health -= this.playerOne.strength;
         if (playerTwo.health == 0){
           this.stop();
         }
         return true;
-
       } 
     }
-  }
-  
+  }  
 }
 
 
 Game.prototype.checkCollisionBulletsTwoPlayerOne = function() {                           //entre balas de player2 y player1
   var playerOne = this.playerOne;
-  for (j = 0; j < this.playerTwo.bullets.length; j++){
-
-  
+  for (j = 0; j < this.playerTwo.bullets.length; j++){  
     for (i=0; i < this.background.listObstacles.length; i++){
       if (
         this.playerTwo.bullets[j].x + this.playerOne.img.width/2 < playerOne.x + playerOne.img.width && 
         this.playerTwo.bullets[j].x + this.playerOne.img.width/2 + this.playerTwo.bullets[j].r > playerOne.x && 
         this.playerTwo.bullets[j].y < playerOne.y + playerOne.img.width && 
-        this.playerTwo.bullets[j].y + this.playerTwo.bullets[j].r > playerOne.y) {
+        this.playerTwo.bullets[j].y + this.playerTwo.bullets[j].r > playerOne.y
+      ) {
         this.playerTwo.bullets.splice(j,1);
         this.playerOne.health -= this.playerTwo.strength;
         if (playerOne.health == 0){
           this.stop();
         }
         return true;
-
       } 
     }
-  }
-  
+  }  
 }
 
-// if (
-//   cannonBall.x < boat.x + boat.width &&
-//   cannonBall.x + cannonBall.radius > boat.x &&
-//   cannonBall.y < boat.y + boat.height &&
-//   cannonBall.y + cannonBall.radius > boat.y
-// ) {
-//   this.handleImpact(boat);
-//     console.log(“IMPACTO!!“);
+// Game.prototype.checkCollisionPlayerOnePlayerTwo = function() {                           //entre player1 y player2
+//   var playerOne = this.playerOne;
+//   var playerTwo = this.playerTwo;
+//     if (
+//       playerOne.centerX < playerTwo.centerX + playerTwo.r && 
+//       playerOne.centerX +  playerOne.r > playerTwo.centerX && 
+//       playerOne.centerY < playerTwo.centerY + playerTwo.r && 
+//       playerOne.centerY +  playerOne.r  > playerTwo.centerY
+//     ) {
+//       this.playerOne.x = this.playerOne.lastX;
+//       this.playerOne.y = this.playerOne.lastY;   
+//     return true;
+//     }   
+// }
+
+// Game.prototype.checkCollisionPlayerTwoPlayerOne = function() {                           //entre player2 y player1
+//   var playerOne = this.playerOne;
+//   var playerTwo = this.playerTwo;
+//     if (
+//       playerTwo.x + playerTwo.img.width/2 < playerOne.x + playerOne.img.width/2 + playerOne.r && 
+//       playerTwo.x + playerTwo.img.width/2 +  playerTwo.r > playerOne.x + playerOne.img.width/2 && 
+//       playerTwo.y + playerTwo.img.height/2 < playerOne.y + playerOne.img.height/2 + playerOne.r && 
+//       playerTwo.y + playerTwo.img.height/2 +  playerTwo.r  > playerOne.y + playerOne.img.width/2
+//     ) {
+//       this.playerTwo.x = this.playerTwo.lastX;
+//       this.playerTwo.y = this.playerTwo.lastY;   
+//     return true;
+//     }   
+// }
+
+
+
+
+
+
