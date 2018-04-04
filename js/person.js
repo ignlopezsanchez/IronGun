@@ -16,11 +16,11 @@ function Person(game){
 } 
 
 Person.prototype.draw = function(){  
+  this.centerX = this.x + this.img.width/2;
+  this.centerY = this.y + this.img.height/2;
   var angleRadians = (Math.PI/180)*(this.angle);
   this.game.ctx.save(); 
   this.game.ctx.translate(this.x + this.img.width/2, this.y + this.img.height/2);
-  this.centerX = this.x + this.img.width/2;
-  this.centerY = this.y + this.img.height/2;
   this.game.ctx.rotate(angleRadians);
   this.game.ctx.drawImage(this.img, -this.img.width/2, -this.img.height/2);
 

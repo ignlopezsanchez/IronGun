@@ -135,8 +135,7 @@ Game.prototype.checkCollisions = function(){
   this.checkCollisionTwoBullets();
   this.checkCollisionBulletsOnePlayerTwo();
   this.checkCollisionBulletsTwoPlayerOne();
-  // this.checkCollisionPlayerOnePlayerTwo();
-  // this.checkCollisionPlayerTwoPlayerOne();
+  this.checkCollisionPlayerOnePlayerTwo();
 
   
 
@@ -250,35 +249,44 @@ Game.prototype.checkCollisionBulletsTwoPlayerOne = function() {                 
   }  
 }
 
-// Game.prototype.checkCollisionPlayerOnePlayerTwo = function() {                           //entre player1 y player2
-//   var playerOne = this.playerOne;
-//   var playerTwo = this.playerTwo;
-//     if (
-//       playerOne.centerX < playerTwo.centerX + playerTwo.r && 
-//       playerOne.centerX +  playerOne.r > playerTwo.centerX && 
-//       playerOne.centerY < playerTwo.centerY + playerTwo.r && 
-//       playerOne.centerY +  playerOne.r  > playerTwo.centerY
-//     ) {
-//       this.playerOne.x = this.playerOne.lastX;
-//       this.playerOne.y = this.playerOne.lastY;   
-//     return true;
-//     }   
-// }
 
-// Game.prototype.checkCollisionPlayerTwoPlayerOne = function() {                           //entre player2 y player1
-//   var playerOne = this.playerOne;
-//   var playerTwo = this.playerTwo;
-//     if (
-//       playerTwo.x + playerTwo.img.width/2 < playerOne.x + playerOne.img.width/2 + playerOne.r && 
-//       playerTwo.x + playerTwo.img.width/2 +  playerTwo.r > playerOne.x + playerOne.img.width/2 && 
-//       playerTwo.y + playerTwo.img.height/2 < playerOne.y + playerOne.img.height/2 + playerOne.r && 
-//       playerTwo.y + playerTwo.img.height/2 +  playerTwo.r  > playerOne.y + playerOne.img.width/2
-//     ) {
-//       this.playerTwo.x = this.playerTwo.lastX;
-//       this.playerTwo.y = this.playerTwo.lastY;   
-//     return true;
-//     }   
-// }
+
+Game.prototype.checkCollisionPlayerOnePlayerTwo = function() {                           //entre players
+  var playerOne = this.playerOne;
+  var playerTwo = this.playerTwo;
+  if (
+    Math.abs(playerOne.centerX - playerTwo.centerX) < playerOne.r + playerTwo.r &&
+    Math.abs(playerOne.centerY - playerTwo.centerY) < playerOne.r + playerTwo.r
+  ) {
+      this.playerOne.x = this.playerOne.lastX;
+      this.playerOne.y = this.playerOne.lastY; 
+      this.playerTwo.x = this.playerTwo.lastX;
+      this.playerTwo.y = this.playerTwo.lastY;    
+    return true;
+    }   
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
