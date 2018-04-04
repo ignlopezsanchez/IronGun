@@ -32,3 +32,5 @@ Bullet.prototype.move = function() {
     this.y -= Math.sin(angleRadians)*this.vx;
 
 };
+
+

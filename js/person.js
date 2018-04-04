@@ -117,6 +117,20 @@ Person.prototype.moveBullets = function() {
   });
 }
 
+Person.prototype.checkCollisionPlayerWithObstacles = function(person) {                    //entre player y obstaculo
+  for (i=0; i < this.game.background.listObstacles.length; i++){
+    if (
+      person.x < this.game.background.listObstacles[i][0] + this.game.background.listObstacles[i][2] && 
+      person.x + person.img.width/2 + person.r > this.game.background.listObstacles[i][0] && 
+      person.y < this.game.background.listObstacles[i][1] + this.game.background.listObstacles[i][3] && 
+      person.y + person.img.width/2 + person.r  > this.game.background.listObstacles[i][1]
+    ) {
+      person.x = person.lastX;
+      person.y = person.lastY;   
+    return true;
+    } 
+  }  
+}
 
 
 
