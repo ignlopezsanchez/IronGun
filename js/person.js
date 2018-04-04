@@ -13,7 +13,9 @@ function Person(game){
   this.r = 11;
 } 
 
-Person.prototype.draw = function(){  
+Person.prototype.draw = function(){ 
+
+  this.drawHealth(); 
   this.centerX = this.x + this.img.width/2;
   this.centerY = this.y + this.img.height/2;
   var angleRadians = (Math.PI/180)*(this.angle);
@@ -32,6 +34,16 @@ Person.prototype.draw = function(){
   })
 }
 
+Person.prototype.drawHealth = function() {
+  this.game.ctx.strokeStyle = "black";
+  this.game.ctx.strokeRect(this.x - this.img.width/2, this.y - this.img.height/2, 50, 10);
+  this.game.ctx.fillStyle = "red";
+  this.game.ctx.fillRect(this.x - this.img.width/2, this.y - this.img.height/2, this.health/2, 10);
+
+
+
+
+}
 Person.prototype.moveForward = function() {  
   if(this.pressedKeys[0] === true){
     this.lastX = this.x;
@@ -78,8 +90,8 @@ Person.prototype.rotateLeft = function() {
 };
 
 Person.prototype.shoot = function() { 
-    var bullet = new Bullet(this.game, this); 
-    this.bullets.push(bullet);  
+    this.bullet = new Bullet(this.game, this); 
+    this.bullets.push(this.bullet);  
 };
 
 Person.prototype.trueUp = function(){
