@@ -12,6 +12,8 @@ function Bullet(game, person) {
 }
 
 Bullet.prototype.draw = function() {
+  this.centerBulletX = this.x + this.person.img.width/2;
+  this.centerBulletY = this.y + this.person.img.height/2;
   var angleRadians = (Math.PI/180)*(this.angle);
   this.game.ctx.save(); 
   this.game.ctx.translate(this.x + this.person.img.width/2, this.y + this.person.img.height/2);

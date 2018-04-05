@@ -7,7 +7,7 @@ function Person(game){
   this.angleMovement = 3;
   this.bullets = [];
   this.health = 100;
-  this.strength = 1;
+  this.strength = 5;
   this.bullets = [];
   this.pressedKeys = [false, false, false, false];
   this.r = 11;

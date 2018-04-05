@@ -15,6 +15,8 @@ function Game(canvasId){
   this.playerOne = new Player(this, 400, 400, "img/player.png");
   this.playerTwo = new Player(this, 400, 700, "img/player.png")
   this.background = new Background(this);
+  this.img = new Image();
+  this.img.src = "img/GAME_OVER.png";
   this.setListeners();  
 };
 
@@ -99,6 +101,13 @@ Game.prototype.start = function(){
 
 Game.prototype.stop = function(){
   clearInterval(this.intervalId);
+  this.clear();
+  this.ctx.drawImage(this.img, 0, 0);
+
+  // this.ctx.fillStyle = "black"
+  // this.ctx.font = "30px Arial";
+  // this.ctx.fillText("GAME OVER",this.canvas.width/2 -50 ,this.canvas.width/2 - 50);
+  this.ctx.draw();
 }
 
 Game.prototype.draw = function(){
@@ -130,10 +139,10 @@ Game.prototype.clear = function(){
 Game.prototype.checkCollisions = function(){
   this.playerOne.checkCollisionPlayerWithObstacles(this.playerOne);
   this.playerTwo.checkCollisionPlayerWithObstacles(this.playerTwo);
-  this.checkCollisionBulletsWithObstacles();
-  this.checkCollisionBulletsWithObstaclesT();
-  this.checkCollisionBulletsOnePlayerTwo();
-  this.checkCollisionBulletsTwoPlayerOne();
+  this.checkCollisionBulletsWithObstacles(this.playerOne);
+  this.checkCollisionBulletsWithObstacles(this.playerTwo);
+  this.checkCollisionBulletsPlayers(this.playerOne, this.playerTwo);
+  this.checkCollisionBulletsPlayers(this.playerTwo, this.playerOne);
   this.checkCollisionPlayerOnePlayerTwo();
 
   
@@ -143,51 +152,36 @@ Game.prototype.checkCollisions = function(){
 
 
 
-Game.prototype.checkCollisionBulletsWithObstacles = function() {                         //entre balas de player1 y obstaculos
-  for (j = 0; j < this.playerOne.bullets.length; j++){ 
+Game.prototype.checkCollisionBulletsWithObstacles = function(player) {                         //entre balas de player y obstaculos
+  for (j = 0; j < player.bullets.length; j++){ 
     for (i=0; i < this.background.listObstacles.length; i++){
       if (
-        this.playerOne.bullets[j].x + this.playerOne.img.width/2 < this.background.listObstacles[i][0] + this.background.listObstacles[i][2] && 
-        this.playerOne.bullets[j].x + this.playerOne.img.width/2 + this.playerOne.bullets[j].r > this.background.listObstacles[i][0] && 
-        this.playerOne.bullets[j].y < this.background.listObstacles[i][1] + this.background.listObstacles[i][3] && 
-        this.playerOne.bullets[j].y + this.playerOne.bullets[j].r > this.background.listObstacles[i][1]
+        player.bullets[j].x + player.img.width/2 < this.background.listObstacles[i][0] + this.background.listObstacles[i][2] && 
+        player.bullets[j].x + player.img.width/2 + player.bullets[j].r > this.background.listObstacles[i][0] && 
+        player.bullets[j].y < this.background.listObstacles[i][1] + this.background.listObstacles[i][3] && 
+        player.bullets[j].y + player.bullets[j].r > this.background.listObstacles[i][1]
       ) {
-        this.playerOne.bullets.splice(j,1);
+        player.bullets.splice(j,1);
         return true;
       } 
     }
   }  
 }
 
-Game.prototype.checkCollisionBulletsWithObstaclesT = function() {                                //entre balas de player2 y obstaculos
-  for (j = 0; j < this.playerTwo.bullets.length; j++){  
-    for (i=0; i < this.background.listObstacles.length; i++){
-      if (
-        this.playerTwo.bullets[j].x + this.playerOne.img.width/2 < this.background.listObstacles[i][0] + this.background.listObstacles[i][2] && 
-        this.playerTwo.bullets[j].x + this.playerOne.img.width/2 + this.playerTwo.bullets[j].r > this.background.listObstacles[i][0] && 
-        this.playerTwo.bullets[j].y < this.background.listObstacles[i][1] + this.background.listObstacles[i][3] && 
-        this.playerTwo.bullets[j].y + this.playerTwo.bullets[j].r > this.background.listObstacles[i][1]
-      ) {
-        this.playerTwo.bullets.splice(j,1);
-        return true;
-      } 
-    }
-  }  
-}
 
-Game.prototype.checkCollisionBulletsOnePlayerTwo = function() {                           //entre balas de player1 y player2
-  var playerTwo = this.playerTwo;
-  for (j = 0; j < this.playerOne.bullets.length; j++){  
+Game.prototype.checkCollisionBulletsPlayers = function(player, target) {                           //entre balas de player1 y player2
+  
+  for (j = 0; j < player.bullets.length; j++){  
     for (i=0; i < this.background.listObstacles.length; i++){
       if (
-        this.playerOne.bullets[j].x + this.playerOne.img.width/2 < playerTwo.x + playerTwo.img.width && 
-        this.playerOne.bullets[j].x + this.playerOne.img.width/2 + this.playerOne.bullets[j].r > playerTwo.x && 
-        this.playerOne.bullets[j].y < playerTwo.y + playerTwo.img.width && 
-        this.playerOne.bullets[j].y + this.playerOne.bullets[j].r > playerTwo.y
+        player.bullets[j].x + player.img.width/2 < target.x + target.img.width && 
+        player.bullets[j].x + player.img.width/2 + player.bullets[j].r > target.x && 
+        player.bullets[j].y < target.y + target.img.width && 
+        player.bullets[j].y + player.bullets[j].r > target.y
       ) {
-        this.playerOne.bullets.splice(j,1);
-        this.playerTwo.health -= this.playerOne.strength;
-        if (playerTwo.health == 0){
+        player.bullets.splice(j,1);
+        target.health -= player.strength;
+        if (target.health == 0){
           this.stop();
         }
         return true;
@@ -196,29 +190,26 @@ Game.prototype.checkCollisionBulletsOnePlayerTwo = function() {                 
   }  
 }
 
-
-Game.prototype.checkCollisionBulletsTwoPlayerOne = function() {                           //entre balas de player2 y player1
-  var playerOne = this.playerOne;
-  for (j = 0; j < this.playerTwo.bullets.length; j++){  
-    for (i=0; i < this.background.listObstacles.length; i++){
-      if (
-        this.playerTwo.bullets[j].x + this.playerOne.img.width/2 < playerOne.x + playerOne.img.width && 
-        this.playerTwo.bullets[j].x + this.playerOne.img.width/2 + this.playerTwo.bullets[j].r > playerOne.x && 
-        this.playerTwo.bullets[j].y < playerOne.y + playerOne.img.width && 
-        this.playerTwo.bullets[j].y + this.playerTwo.bullets[j].r > playerOne.y
-      ) {
-        this.playerTwo.bullets.splice(j,1);
-        this.playerOne.health -= this.playerTwo.strength;
-        if (playerOne.health == 0){
-          this.stop();
-        }
-        return true;
-      } 
-    }
-  }  
-}
-
-
+// Game.prototype.checkCollisionBulletsPlayers = function(player, target) {                           //entre balas de player1 y player2
+  
+//   for (j = 0; j < player.bullets.length; j++){  
+//     for (i=0; i < this.background.listObstacles.length; i++){
+//       if (
+//         player.bullets[j].x + player.img.width/2 < target.x + target.img.width && 
+//         player.bullets[j].x + player.img.width/2 + player.bullets[j].r > target.x && 
+//         player.bullets[j].y < target.y + target.img.width && 
+//         player.bullets[j].y + player.bullets[j].r > target.y
+//       ) {
+//         player.bullets.splice(j,1);
+//         target.health -= player.strength;
+//         if (target.health == 0){
+//           this.stop();
+//         }
+//         return true;
+//       } 
+//     }
+//   }  
+// }
 
 Game.prototype.checkCollisionPlayerOnePlayerTwo = function() {                           //entre players
   var playerOne = this.playerOne;
