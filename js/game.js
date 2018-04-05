@@ -16,8 +16,11 @@ function Game(canvasId){
   this.playerTwo = new Player(this, 400, 700, "img/player.png")
   this.background = new Background(this);
   this.img = new Image();
-  this.img.src = "img/GAME_OVER.png";
-  this.setListeners();  
+  this.img.src = "img/heart.png";
+  this.setListeners(); 
+  this.audioMuerte = new Audio("sounds/muerte.mp3");
+  this.audioFight = new Audio("sounds/fight.mp3");
+  
 };
 
 Game.prototype.setListeners = function(){
@@ -91,6 +94,7 @@ Game.prototype.setListeners = function(){
 };
 
 Game.prototype.start = function(){
+    this.audioFight.play();
     this.intervalId = setInterval(function(){
     this.clear();
     this.checkCollisions();
@@ -100,14 +104,15 @@ Game.prototype.start = function(){
 }
 
 Game.prototype.stop = function(){
+  this.audioMuerte.play();
   clearInterval(this.intervalId);
   this.clear();
   this.ctx.drawImage(this.img, 0, 0);
-
   // this.ctx.fillStyle = "black"
   // this.ctx.font = "30px Arial";
   // this.ctx.fillText("GAME OVER",this.canvas.width/2 -50 ,this.canvas.width/2 - 50);
   this.ctx.draw();
+  
 }
 
 Game.prototype.draw = function(){
@@ -144,6 +149,11 @@ Game.prototype.checkCollisions = function(){
   this.checkCollisionBulletsPlayers(this.playerOne, this.playerTwo);
   this.checkCollisionBulletsPlayers(this.playerTwo, this.playerOne);
   this.checkCollisionPlayerOnePlayerTwo();
+  this.playerOne.checkCollisionPlayersMines(this.playerOne);
+  this.playerTwo.checkCollisionPlayersMines(this.playerTwo);
+  
+
+  
 
   
 
@@ -179,7 +189,7 @@ Game.prototype.checkCollisionBulletsPlayers = function(player, target) {        
       ) {
         player.bullets.splice(j,1);
         target.health -= player.strength;
-        if (target.health == 0){
+        if (target.health <= 0){
           this.stop();
         }
         return true;

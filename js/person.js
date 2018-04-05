@@ -11,6 +11,9 @@ function Person(game){
   this.bullets = [];
   this.pressedKeys = [false, false, false, false];
   this.r = 11;
+  this.audioMina = new Audio("sounds/mina.mp3");
+  this.audioDisparo = new Audio("sounds/disparo.mp3");
+  
 } 
 
 Person.prototype.draw = function(){ 
@@ -23,11 +26,6 @@ Person.prototype.draw = function(){
   this.game.ctx.translate(this.x + this.img.width/2, this.y + this.img.height/2);
   this.game.ctx.rotate(angleRadians);
   this.game.ctx.drawImage(this.img, -this.img.width/2, -this.img.height/2);
-  // this.game.ctx.beginPath();
-  // this.game.ctx.strokeStyle="black";
-  // this.game.ctx.arc(0, 0, this.r, 0, Math.PI * 2);
-  // this.game.ctx.stroke();
-  // this.game.ctx.closePath();
   this.game.ctx.restore();
   this.bullets.forEach(function(bullet) {
     bullet.draw();
@@ -90,8 +88,10 @@ Person.prototype.rotateLeft = function() {
 };
 
 Person.prototype.shoot = function() { 
+    this.audioDisparo.pause();
     this.bullet = new Bullet(this.game, this); 
-    this.bullets.push(this.bullet);  
+    this.bullets.push(this.bullet); 
+    this.audioDisparo.play(); 
 };
 
 Person.prototype.trueUp = function(){
@@ -145,5 +145,23 @@ Person.prototype.checkCollisionPlayerWithObstacles = function(person) {         
 }
 
 
+Person.prototype.checkCollisionPlayersMines = function(player) {                           //entre players y minas
+    for (i=0; i < this.game.background.listMines.length; i++){
+      if (
+        Math.abs(this.game.background.listMines[i].x - player.centerX) < this.game.background.listMines[i].r + player.r &&
+        Math.abs(this.game.background.listMines[i].y - player.centerY) < this.game.background.listMines[i].r + player.r
+      ) {
+        
+        this.audioMina.play();
+        this.game.background.listMines.splice(i,1);
+        player.health -= this.game.background.listMines[i].strength;
+        if (player.health <= 0){
+          this.game.stop();
+        }
+        return true;
+      } 
+    }
+   
+}
 
 

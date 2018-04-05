@@ -6,9 +6,9 @@ function Background(game){
   this.img.src = "img/background.png";
   this.mineX = 0;
   this.mineY = 0;
-  this.mineRadius = 5;
+  this.mineRadius = 3;
   this.listMines = [];
-  this.minesNumber = 50;
+  this.minesNumber = 30;
 
   this.listObstacles = [
     [100, 225, 150, 150],        //[x, y, width, height] de cada obstaculo
@@ -37,6 +37,8 @@ function Background(game){
     [775, 25, 25, 750]
   ]
 this.collision = false;
+this.canPlace = false;
+
 this.generateMines();
 } 
 
@@ -54,15 +56,14 @@ Background.prototype.generateMines = function () {
   for (var i = 0; i < this.minesNumber; i++) {
     this.mineX = this.random(this.game.canvas.width);
     this.mineY = this.random(this.game.canvas.height);
+    
     if (this.cannotPlace()) {
       i--;
     }
     else{
-     this.listMines.push(new Mine(this.game, this.mineX, this.mineY));
-    }
-    
+     this.listMines.push(new Mine(this.game, this.mineX, this.mineY, this.mineRadius));
+    }    
   }
-
 }
 
 Background.prototype.random = function(limit) {
@@ -71,15 +72,13 @@ Background.prototype.random = function(limit) {
 
 Background.prototype.cannotPlace = function(){
   for (var i=0; i < this.listObstacles.length; i++){
-  
   if (
     this.mineX + this.mineRadius  < this.listObstacles[i][0] + this.listObstacles[i][2] && 
     this.mineX  + 2*this.mineRadius > this.listObstacles[i][0] && 
     this.mineY + this.mineRadius< this.listObstacles[i][1] + this.listObstacles[i][3] && 
-    this.mineY + 2*this.mineRadius > this.listObstacles[i][1]
+    this.mineY + 2*this.mineRadius > this.listObstacles[i][1] 
   ) {
     return true;
-
   }
   return false;
   }
