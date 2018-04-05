@@ -12,8 +12,8 @@ var SHOOT_KEY = 191;
 function Game(canvasId){
   this.canvas = document.getElementById(canvasId);
   this.ctx = this.canvas.getContext("2d");
-  this.playerOne = new Player(this, 400, 400, "img/player.png");
-  this.playerTwo = new Player(this, 400, 700, "img/player.png")
+  this.playerOne = new Player(this, 50, 200, 0, "img/player.png");
+  this.playerTwo = new Player(this, 730, 700, 180, "img/player.png")
   this.background = new Background(this);
   this.img = new Image();
   this.img.src = "img/heart.png";

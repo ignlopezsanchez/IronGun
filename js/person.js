@@ -3,7 +3,7 @@ function Person(game){
   this.x;
   this.y;
   this.vx = 2;
-  this.angle = 0;
+  this.angle;
   this.angleMovement = 3;
   this.bullets = [];
   this.health = 100;

@@ -4,7 +4,11 @@ body {
 }
 
 #start-button {
-
+  background-color: red;
+  font-family: 'Creepster', cursive; 
+  color: beige;
+  border: 1px red;
+  
 
 }
 .container {
@@ -15,17 +19,13 @@ body {
 
   display: none;
 }
-.btn-primary {
-
-background-color: red;
-
-}
 
 .imagen {
 
-  background-image: url(../img/grupo.jpg);
+  background-image: url(../img/fondo.png);
   background-repeat: no-repeat;
   background-size: cover;
   height: 900px;
   
 }
+
