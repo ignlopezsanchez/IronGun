@@ -169,15 +169,13 @@ Game.prototype.checkCollisionBulletsWithObstacles = function(player) {          
 }
 
 
-Game.prototype.checkCollisionBulletsPlayers = function(player, target) {                           //entre balas de player1 y player2
+Game.prototype.checkCollisionBulletsPlayers = function(player, target) {                           //entre balas de player y el otro player
   
   for (j = 0; j < player.bullets.length; j++){  
     for (i=0; i < this.background.listObstacles.length; i++){
       if (
-        player.bullets[j].x + player.img.width/2 < target.x + target.img.width && 
-        player.bullets[j].x + player.img.width/2 + player.bullets[j].r > target.x && 
-        player.bullets[j].y < target.y + target.img.width && 
-        player.bullets[j].y + player.bullets[j].r > target.y
+        Math.abs(player.bullets[j].centerBulletX - target.centerX) < player.bullets[j].r + target.r &&
+        Math.abs(player.bullets[j].centerBulletY - target.centerY) < player.bullets[j].r + target.r
       ) {
         player.bullets.splice(j,1);
         target.health -= player.strength;
@@ -190,26 +188,6 @@ Game.prototype.checkCollisionBulletsPlayers = function(player, target) {        
   }  
 }
 
-// Game.prototype.checkCollisionBulletsPlayers = function(player, target) {                           //entre balas de player1 y player2
-  
-//   for (j = 0; j < player.bullets.length; j++){  
-//     for (i=0; i < this.background.listObstacles.length; i++){
-//       if (
-//         player.bullets[j].x + player.img.width/2 < target.x + target.img.width && 
-//         player.bullets[j].x + player.img.width/2 + player.bullets[j].r > target.x && 
-//         player.bullets[j].y < target.y + target.img.width && 
-//         player.bullets[j].y + player.bullets[j].r > target.y
-//       ) {
-//         player.bullets.splice(j,1);
-//         target.health -= player.strength;
-//         if (target.health == 0){
-//           this.stop();
-//         }
-//         return true;
-//       } 
-//     }
-//   }  
-// }
 
 Game.prototype.checkCollisionPlayerOnePlayerTwo = function() {                           //entre players
   var playerOne = this.playerOne;
