@@ -7,7 +7,7 @@ var UP_KEY = 38;
 var DOWN_KEY = 40;
 var RIGHT_KEY = 39;
 var LEFT_KEY = 37;
-var SHOOT_KEY = 191;
+var SHOOT_KEY = 189;
 
 function Game(canvasId){
   this.canvas = document.getElementById(canvasId);
