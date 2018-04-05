@@ -108,9 +108,6 @@ Game.prototype.stop = function(){
   clearInterval(this.intervalId);
   this.clear();
   this.ctx.drawImage(this.img, 0, 0);
-  // this.ctx.fillStyle = "black"
-  // this.ctx.font = "30px Arial";
-  // this.ctx.fillText("GAME OVER",this.canvas.width/2 -50 ,this.canvas.width/2 - 50);
   this.ctx.draw();
   
 }
