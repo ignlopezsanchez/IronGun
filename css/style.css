@@ -1,7 +1,31 @@
-canvas {
-  border: 1px dotted;
-}
-#start-button {
-  display: block;
 
+body {
+  background-color: beige;
+}
+
+#start-button {
+
+
+}
+.container {
+  text-align: center;
+ 
+}
+#my-canvas {
+
+  display: none;
+}
+.btn-primary {
+
+background-color: red;
+
+}
+
+.imagen {
+
+  background-image: url(../img/grupo.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 900px;
+  
 }

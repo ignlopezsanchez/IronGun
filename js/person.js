@@ -10,7 +10,7 @@ function Person(game){
   this.strength = 5;
   this.bullets = [];
   this.pressedKeys = [false, false, false, false];
-  this.r = 11;
+  this.r = 12;
   this.audioMina = new Audio("sounds/mina.mp3");
   this.audioDisparo = new Audio("sounds/disparo.mp3");
   
@@ -34,9 +34,9 @@ Person.prototype.draw = function(){
 
 Person.prototype.drawHealth = function() {
   this.game.ctx.strokeStyle = "black";
-  this.game.ctx.strokeRect(this.x - this.img.width/2, this.y - this.img.height/2, 50, 10);
+  this.game.ctx.strokeRect(this.x - this.img.width/2, this.y - this.img.height, 50, 10);
   this.game.ctx.fillStyle = "red";
-  this.game.ctx.fillRect(this.x - this.img.width/2, this.y - this.img.height/2, this.health/2, 10);
+  this.game.ctx.fillRect(this.x - this.img.width/2, this.y - this.img.height, this.health/2, 10);
 
 
 
