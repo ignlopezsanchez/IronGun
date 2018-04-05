@@ -7,13 +7,10 @@ body {
   background-color: red;
   font-family: 'Creepster', cursive; 
   color: beige;
-  border: 1px red;
-  
-
+  border: 1px red;  
 }
 .container {
-  text-align: center;
- 
+  text-align: center; 
 }
 #my-canvas {
 
@@ -25,7 +22,6 @@ body {
   background-image: url(../img/fondo.png);
   background-repeat: no-repeat;
   background-size: cover;
-  height: 900px;
-  
+  height: 900px;  
 }
 

@@ -117,8 +117,6 @@ Game.prototype.stop = function(){
 Game.prototype.reset = function(){
   this.audioMuerte.pause();
   this.audioMuerte.currentTime = 0.0;
-
-
 }
 
 Game.prototype.draw = function(){
@@ -132,13 +130,10 @@ Game.prototype.move = function(){
   this.playerOne.moveBackward();
   this.playerOne.rotateRight();
   this.playerOne.rotateLeft();
-
   this.playerTwo.moveForward();
   this.playerTwo.moveBackward();
   this.playerTwo.rotateRight();
   this.playerTwo.rotateLeft();
- 
-
   this.playerOne.moveBullets();
   this.playerTwo.moveBullets();
 };
@@ -158,15 +153,7 @@ Game.prototype.checkCollisions = function(){
   this.playerOne.checkCollisionPlayersMines(this.playerOne);
   this.playerTwo.checkCollisionPlayersMines(this.playerTwo);
   
-
-  
-
-  
-
 }
-
-
-
 
 Game.prototype.checkCollisionBulletsWithObstacles = function(player) {                         //entre balas de player y obstaculos
   for (j = 0; j < player.bullets.length; j++){ 
@@ -183,7 +170,6 @@ Game.prototype.checkCollisionBulletsWithObstacles = function(player) {          
     }
   }  
 }
-
 
 Game.prototype.checkCollisionBulletsPlayers = function(player, target) {                           //entre balas de player y el otro player
   
@@ -203,7 +189,6 @@ Game.prototype.checkCollisionBulletsPlayers = function(player, target) {        
     }
   }  
 }
-
 
 Game.prototype.checkCollisionPlayerOnePlayerTwo = function() {                           //entre players
   var playerOne = this.playerOne;

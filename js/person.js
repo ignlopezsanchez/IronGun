@@ -12,12 +12,10 @@ function Person(game){
   this.pressedKeys = [false, false, false, false];
   this.r = 12;
   this.audioMina = new Audio("sounds/mina.mp3");
-  this.audioDisparo = new Audio("sounds/disparo.mp3");
-  
+  this.audioDisparo = new Audio("sounds/disparo.mp3");  
 } 
 
 Person.prototype.draw = function(){ 
-
   this.drawHealth(); 
   this.centerX = this.x + this.img.width/2;
   this.centerY = this.y + this.img.height/2;
@@ -37,10 +35,6 @@ Person.prototype.drawHealth = function() {
   this.game.ctx.strokeRect(this.x - this.img.width/2, this.y - this.img.height, 50, 10);
   this.game.ctx.fillStyle = "red";
   this.game.ctx.fillRect(this.x - this.img.width/2, this.y - this.img.height, this.health/2, 10);
-
-
-
-
 }
 Person.prototype.moveForward = function() {  
   if(this.pressedKeys[0] === true){
@@ -52,9 +46,6 @@ Person.prototype.moveForward = function() {
   }  
 }
 
-
-
-
 Person.prototype.moveBackward = function() {
   if(this.pressedKeys[1] === true){
     this.lastX = this.x;
@@ -65,8 +56,6 @@ Person.prototype.moveBackward = function() {
   }
 }
 
-
-
 Person.prototype.rotateRight = function() {
   if(this.pressedKeys[2] === true){
     this.angle += this.angleMovement;
@@ -75,7 +64,6 @@ Person.prototype.rotateRight = function() {
     }
   }
 }
-
 
 Person.prototype.rotateLeft = function() {
 
@@ -160,8 +148,7 @@ Person.prototype.checkCollisionPlayersMines = function(player) {                
         }
         return true;
       } 
-    }
-   
+    }   
 }
 
 

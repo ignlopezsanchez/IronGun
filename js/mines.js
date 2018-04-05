@@ -15,5 +15,4 @@ Mine.prototype.draw = function() {
   this.game.ctx.fill();
   this.game.ctx.stroke();
   this.game.ctx.closePath();
-
 }

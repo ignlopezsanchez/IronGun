@@ -4,6 +4,5 @@ window.onload = function () {
           $('#my-canvas').show();
           $('#fondo').hide();     
       game.start();
-  };
-    
+  };    
 };

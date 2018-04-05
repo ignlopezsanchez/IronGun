@@ -9,7 +9,6 @@ function Background(game){
   this.mineRadius = 3;
   this.listMines = [];
   this.minesNumber = 30;
-
   this.listObstacles = [
     [100, 225, 150, 150],        //[x, y, width, height] de cada obstaculo
     [500, 225, 150, 150],
@@ -47,10 +46,8 @@ Background.prototype.draw = function(){
 
   this.listMines.forEach(function(mine) {
     mine.draw();
-  });
-  
+  });  
 }
-
 
 Background.prototype.generateMines = function () {
   for (var i = 0; i < this.minesNumber; i++) {
