@@ -11,7 +11,7 @@ Player One:
   
   
 Player Two: 
-  - ?: shoot.
+  - -: shoot.
   - Up arrow: move forward.
   - Left arrow: rotate left.
   - Right arrow: rotate right.
