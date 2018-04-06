@@ -111,10 +111,6 @@ Game.prototype.stop = function(){
   this.ctx.draw();
   
 }
-Game.prototype.reset = function(){
-  this.audioMuerte.pause();
-  this.audioMuerte.currentTime = 0.0;
-}
 
 Game.prototype.draw = function(){
   this.background.draw();
